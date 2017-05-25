@@ -32,27 +32,27 @@
                 $album = $cmd->fetch();
                 $conn = null;
 
-                $title = $album['title';]
-                $year = $album['year';]
-                $artist = $album['artist';]
-                $genrePicked = $album['genre';]
+                $title = $album['title'];
+                $year = $album['year'];
+                $artist = $album['artist'];
+                $genrePicked = $album['genre'];
             }
         ?>
 
         <form method="post" action="saveAlbum.php">
              <fieldset class="form-group">
                  <label for="title" class="col-sm-1">Title: *</label>
-                 <input name="title" id="title" required placeholder="Album title" />
+                 <input name="title" id="title" required placeholder="Album title" value="<?php echo $title?>" />
              </fieldset>
 
             <fieldset class="form-group">
                 <label for="year" class="col-sm-1">Year: </label>
-                <input name="year" id="year" type="number" min="1900" placeholder="Release Year"/>
+                <input name="year" id="year" type="number" min="1900" placeholder="Release Year" value="<?php echo $year?>"/>
             </fieldset>
 
             <fieldset class="form-group">
                 <label for="artist" class="col-sm-1">Artist: *</label>
-                <input name="artist" id="artist" required placeholder="Artist Name"/>
+                <input name="artist" id="artist" required placeholder="Artist Name" value="<?php echo $artist?>"/>
             </fieldset>
 
            <fieldset>
@@ -68,14 +68,21 @@
                    $cmd = $conn->prepare($sql);
                    $cmd->execute();
                    $genres = $cmd->fetchAll();
-                   //Step 4 disconnect from the DB
-                   $cmd = null;
-                   //Step 5 loop over the results to build the list with <option> </option>
+
+                   //Step 4 loop over the results to build the list with <option> </option>
+
                    //echo '<option selected></option>'; //this would create a blank space for user, auto selected
+                   //added if statment and echo below to bring over the ordinal genre when editing the album
                    foreach ($genres as $genre)
                    {
-                       echo '<option>'.$genre['genre'].'</option>';
+                       if($genrePicked == $genre['genre'])
+                           echo '<option selected>'.$genre['genre'].'</option>';
+                       else
+                           echo '<option>'.$genre['genre'].'</option>';
                    }
+
+                   //Step 5 disconnect from the DB
+                   $cmd = null;
                    ?>
 
                </select>
