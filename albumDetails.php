@@ -10,6 +10,35 @@
     <main class="container">
         <h1>Album Details</h1>
 
+        <?php
+            if (!empty($_GET['albumID']))
+                $albumID = $_GET['albumID'];
+            else
+                $albumID = null;
+
+            $title = null;
+            $year = null;
+            $artist = null;
+            $genrePicked = null;
+
+            //if the albumID exists, it is an edit situation and we need to load the album from the DB
+            if(!empty($albumID))
+            {
+                $conn = new PDO('mysql:host=aws.computerstudi.es;dbname=gc200318170', 'gc200318170', 'UU0vTl-Syo');
+                $sql = "SELECT * FROM albums WHERE albumID = :albumID";
+                $cmd = $conn->prepare($sql);
+                $cmd->bindParam(':albumID', $albumID, PDO:: PARAM_INT);
+                $cmd->execute();
+                $album = $cmd->fetch();
+                $conn = null;
+
+                $title = $album['title';]
+                $year = $album['year';]
+                $artist = $album['artist';]
+                $genrePicked = $album['genre';]
+            }
+        ?>
+
         <form method="post" action="saveAlbum.php">
              <fieldset class="form-group">
                  <label for="title" class="col-sm-1">Title: *</label>

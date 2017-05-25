@@ -31,6 +31,7 @@
             <th>Year</th>
             <th>Aritist</th>
             <th>Genre</th>
+            <th>Edit</th>
             <th>Delete</th></tr>';
 
     //table data
@@ -40,7 +41,8 @@
                   <td>'.$album['year'].'</td>
                   <td>'.$album['artist'].'</td>
                   <td>'.$album['genre'].'</td>
-                  <td><a href="deleteAlbum.php?albumID='.$album['albumID'].'"class="btn btn-danger">Delete</a></td></tr>';
+                  <td><a href="albumDetails.php?albumID='.$album['albumID'].'" class="btn btn-primary">Edit</a></td>
+                  <td><a href="deleteAlbum.php?albumID='.$album['albumID'].'" class="btn btn-danger">Delete</a></td></tr>';
     }
 
     echo '</table>'
